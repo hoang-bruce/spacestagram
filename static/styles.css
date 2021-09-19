@@ -1,0 +1,47 @@
+.container-1 {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: whitesmoke;
+  overflow: hidden;
+}
+
+.container-2 {
+  display: flex;
+  border: 1px solid grey;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 75%;
+  border-radius: 1%;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.flex-box-container-post {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  padding: 5%;
+  background-color: white;
+  border-radius: 1%;
+}
+
+.flex-box-container-1, container-2 img {
+  display: flex;
+}
+
+.flex-box-container-1 div {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 16px;
+}
+h3, p {
+  font-size: 14px;
+}
