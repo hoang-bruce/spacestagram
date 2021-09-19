@@ -42,12 +42,21 @@ function loadMore() {
     req.addEventListener("load", function () {
         if (req.status == 200 && req.readyState == 4) {
             var response = JSON.parse(req.responseText);
-            document.getElementById("load-more-button").insertAdjacentHTML("beforeBegin",
-                '<div class="container-2"><img id="pic-' + count + '" src="" alt="NASA Picture Of The Day" width="100%"><div class="flex-box-container-post"><h2 id="title-' + count + '"></h2><h3 id="date-' + count + '"></h3><p id="explanation-' + count + '"></p></div></div>');
-            
+            if (response.media_type === 'image') {
+                document.getElementById("load-more-button").insertAdjacentHTML("beforeBegin",
+                    '<div class="container-2"><img id="pic-' + count + '" src="" alt="NASA Picture Of The Day" width="100%"><div class="flex-box-container-post"><h2 id="title-' + count + '"></h2><h3 id="date-' + count + '"></h3><p id="explanation-' + count + '"></p></div></div>');
+            } else if (response.media_type === 'video') {
+                document.getElementById("load-more-button").insertAdjacentHTML("beforeBegin",
+                    '<div class="container-2"><iframe id="pic-' + count + '" width="1280" height="720" src=""></iframe><div class="flex-box-container-post"><h2 id="title-' + count + '"></h2><h3 id="date-' + count + '"></h3><p id="explanation-' + count + '"></p></div></div>');
+            }
+                
             document.getElementById("title-" + count).textContent = response.title;
             document.getElementById("date-" + count).textContent = response.date;
-            document.getElementById("pic-" + count).src = response.hdurl;
+            if (response.hdurl != null) {
+                document.getElementById("pic-" + count).src = response.hdurl;
+            } else {
+                document.getElementById("pic-" + count).src = response.url;
+            }
             document.getElementById("explanation-" + count).textContent = response.explanation;
             count += 1;
         }
