@@ -1,6 +1,6 @@
 // set initial count
 let url = "https://api.nasa.gov/planetary/apod?api_key=";
-let api_key = "wOHvM1cJzmBzG4unFqCfFfCUB3tr1gJaNEqNxgFq";
+let api_key = "DEMO_KEY";
 
 // total image count
 var count = 0;
