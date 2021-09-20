@@ -44,12 +44,12 @@ function loadMore() {
             var response = JSON.parse(req.responseText);
             if (response.media_type === 'image') {
                 document.getElementById("load-more-button").insertAdjacentHTML("beforeBegin",
-                    '<div class="container-2"><img id="pic-' + count + '" src="" alt="NASA Picture Of The Day" width="100%"><div class="flex-box-container-post"><h2 id="title-' + count + '"></h2><h3 id="date-' + count + '"></h3><p id="explanation-' + count + '"></p></div></div>');
+                    '<div class="container-2"><img id="pic-' + count + '" src="" alt="NASA Picture Of The Day" width="100%"><div class="flex-box-container-post"><h2 id="title-' + count + '"></h2><h3 id="date-' + count + '"></h3><p id="explanation-' + count + '"></p><div><button class="button-dark" id="like-' + count + '" onclick="likePicture(this.id)"> <i class="fa fa-heart"></i> Like</button></div></div></div>');
             } else if (response.media_type === 'video') {
                 document.getElementById("load-more-button").insertAdjacentHTML("beforeBegin",
-                    '<div class="container-2"><iframe id="pic-' + count + '" width="1280" height="720" src=""></iframe><div class="flex-box-container-post"><h2 id="title-' + count + '"></h2><h3 id="date-' + count + '"></h3><p id="explanation-' + count + '"></p></div></div>');
+                    '<div class="container-2"><iframe id="pic-' + count + '" width="1280" height="720" src=""></iframe><div class="flex-box-container-post"><h2 id="title-' + count + '"></h2><h3 id="date-' + count + '"></h3><p id="explanation-' + count + '"></p><div><button class="button-dark" id="like-' + count + '" onclick="likePicture(this.id)"> <i class="fa fa-heart"></i> Like</button></div></div></div>');
             }
-                
+
             document.getElementById("title-" + count).textContent = response.title;
             document.getElementById("date-" + count).textContent = response.date;
             if (response.hdurl != null) {
@@ -58,7 +58,29 @@ function loadMore() {
                 document.getElementById("pic-" + count).src = response.url;
             }
             document.getElementById("explanation-" + count).textContent = response.explanation;
+
+            // Check if image is already liked, if it is, then like it after refresh.
+            if (sessionStorage.getItem(response.date) != null && sessionStorage.getItem(response.date) == 1) {
+                document.getElementById("like-" + count).classList.toggle("liked");
+            } else {
+                sessionStorage.setItem(response.date, 0);
+            }
+
             count += 1;
         }
     })
+}
+
+
+// Sets the button to "liked". Sets session storage to retain info that the picture is liked.
+function likePicture(clicked_id) {
+    let element = document.getElementById(clicked_id);
+    element.classList.toggle("liked");
+    if (sessionStorage.getItem(document.getElementById("date-" + clicked_id.split('-')[1]).textContent) == null || sessionStorage.getItem(document.getElementById("date-" + clicked_id.split('-')[1]).textContent) == 0) {
+        sessionStorage.setItem(document.getElementById("date-" + clicked_id.split('-')[1]).textContent, 1);
+    } else {
+        sessionStorage.setItem(document.getElementById("date-" + clicked_id.split('-')[1]).textContent, 0);
+    }
+
+    //localStorage.setItem(document.getElementById("date-" + clicked_id.split('-')[1]).textContent, 0);
 }
